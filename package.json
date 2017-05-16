@@ -1,0 +1,9 @@
+{
+  "name": "stiva",
+  "version": "1.0.0-alpha.1",
+  "description": "store / state management",
+  "main": "stiva.js",
+  "repository": "https://github.com/LuceStudio/stiva.git",
+  "author": "Luce Studio <coltpini@luce.studio>",
+  "license": "MIT"
+}
