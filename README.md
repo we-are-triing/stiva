@@ -71,7 +71,13 @@ stiva.update('myStore', oldStore => ({...oldStore, value: 'only value I want to 
 
 ### dispatch: `type`
 
-`dispatch` sends the current data of the specified `type` to all who are listening.
+`dispatch` sends the current data of the specified `type` to all who are listening. To add a listener:
+```
+// if your context is document.
+document.addEventListener('stiva-myStore', storeHandler);
+```
+
+Notice the event appends 'stiva-' to the name of your store, this is to avoid event conflicts.
 
 
 ### dispatchAll
