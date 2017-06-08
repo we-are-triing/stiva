@@ -23,3 +23,4 @@ class Stiva {
         }
     }
 };
+new Stiva();
