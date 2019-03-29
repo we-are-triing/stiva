@@ -1,26 +1,24 @@
 class Stiva {
-    constructor(stores = {}, context = document){
-        this.stores = stores;
-        this.context = context;
+    constructor(stores = {}) {
+      this.stores = stores;
+      this.context = new EventTarget();
     }
-    update(type, store){
-        let newStore = store(this.stores[type]);
-        this.stores[type] = newStore;
-        this.dispatch(type);
+    update(type, store) {
+      let newStore = store(this.stores[type]);
+      this.stores[type] = newStore;
+      this.dispatch(type);
     }
-    dispatch(type){
-        this.context.dispatchEvent( new CustomEvent(`stiva-${type}`, {
-            detail: this.stores[type],
-            bubbles: true,
-            cancelable: false
-        }));
+    dispatch(type) {
+      this.context.dispatchEvent(
+        new CustomEvent(`stiva-${type}`, {
+          detail: this.stores[type]
+        })
+      );
     }
-    dispatchAll(){
-        for(let store in this.stores ){
-            if(this.stores.hasOwnProperty(store)){
-                this.dispatch(store);
-            }
-        }
+    dispatchAll() {
+      Object.keys(this.stores).forEach(store => this.dispatch(store));
     }
-};
-new Stiva();
+    listen(type, handler) {
+      this.context.addEventListener(type, handler);
+    }
+}

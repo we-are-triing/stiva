@@ -7,7 +7,7 @@ Stiva is build to allow the data in the store to flow to anything that is listen
 ```
 let stiva = new Stiva();
 
-document.addEventListener('stiva-myStore', (data) => console.log('got the data from myStore!'));
+stiva.listen('myStore', (data) => console.log('got the data from myStore!'));
 
 stiva.update('myStore', oldStore => ({newStoreData: 'This will be in the store'}));
 
@@ -19,7 +19,7 @@ stiva.update('myStore', oldStore => ({newStoreData: 'This will be in the store'}
 
 ### Constructor: `stores = {}, context = document`
 
-The constructor accepts two params, `stores` and `context`.
+The constructor accepts one param, `stores`.
 `stores` defines the default shape of the data so it becomes really easy to pass server values to the instantiation function if needed like so:
 
 ```
@@ -36,8 +36,6 @@ let render = `<html>
 ```
 
 `stores`'s default value is `{}`.
-
-`context` defines the context of the events, it has a default value of `document` but if you wanted to use a different context you could.
 
 
 ### update: `type, store`
@@ -83,3 +81,11 @@ Notice the event appends 'stiva-' to the name of your store, this is to avoid ev
 ### dispatchAll
 
 `dispatchAll`, you guessed it, dispatches all stores to all listeners.
+
+### listen
+
+The listen function gives the hook to listen for updates to the store. It takes two params, `type` and `handler`;
+
+`type` is the type that was used to update the store and get updates.
+`handler` is the function that will act on the data recieved from the store.
+
