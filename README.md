@@ -89,3 +89,11 @@ The listen function gives the hook to listen for updates to the store. It takes 
 `type` is the type that was used to update the store and get updates.
 `handler` is the function that will act on the data recieved from the store.
 
+`listen` returns the listening function used if you want to detach from listening to the store.
+
+### detach
+
+The detach function allows you to stop listening for store updates. It takes two params, `type` and `listener`;
+
+`type` is the type in the store, the same used when listening and updating.
+`listener` is the function used to listen to the store, this was returned from the listen function.
