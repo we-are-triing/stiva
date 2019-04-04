@@ -1,6 +1,6 @@
 {
   "name": "stiva",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "store / state management",
   "main": "dist/stiva.min.js",
   "repository": "https://github.com/LuceStudio/stiva.git",
