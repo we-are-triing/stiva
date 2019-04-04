@@ -1,18 +1,17 @@
 {
   "name": "stiva",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.1",
   "description": "store / state management",
   "main": "dist/stiva.min.js",
   "repository": "https://github.com/LuceStudio/stiva.git",
   "author": "Luce Studio <coltpini@luce.studio>",
   "license": "MIT",
   "scripts": {
-    "build": "babel stiva.js -o dist/stiva-es5.js --presets=es2015 && babili dist/stiva-es5.js -o dist/stiva-es5.min.js; babili stiva.js -o dist/stiva.min.js"
+    "build": "minify stiva.js -o dist/stiva.min.js && babel stiva.js -o dist/stiva-es5.js --presets=es2015 && minify dist/stiva-es5.js -o dist/stiva-es5.min.js"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babili": "^0.1.2"
+    "babel-cli": "^6.26.0",
+    "babel-minify": "^0.5.0",
+    "babel-preset-es2015": "^6.24.1"
   }
 }

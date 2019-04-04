@@ -5,45 +5,54 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Stiva = function () {
-    function Stiva() {
-        var stores = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-        var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+  function Stiva() {
+    var stores = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-        _classCallCheck(this, Stiva);
+    _classCallCheck(this, Stiva);
 
-        this.stores = stores;
-        this.context = context;
+    this.stores = stores;
+    this.context = new EventTarget();
+  }
+
+  _createClass(Stiva, [{
+    key: "update",
+    value: function update(type, store) {
+      var newStore = store(this.stores[type]);
+      this.stores[type] = newStore;
+      this.dispatch(type);
     }
+  }, {
+    key: "dispatch",
+    value: function dispatch(type) {
+      this.context.dispatchEvent(new CustomEvent("stiva-" + type, {
+        detail: this.stores[type]
+      }));
+    }
+  }, {
+    key: "dispatchAll",
+    value: function dispatchAll() {
+      var _this = this;
 
-    _createClass(Stiva, [{
-        key: "update",
-        value: function update(type, store) {
-            var newStore = store(this.stores[type]);
-            this.stores[type] = newStore;
-            this.dispatch(type);
-        }
-    }, {
-        key: "dispatch",
-        value: function dispatch(type) {
-            this.context.dispatchEvent(new CustomEvent("stiva-" + type, {
-                detail: this.stores[type],
-                bubbles: true,
-                cancelable: false
-            }));
-        }
-    }, {
-        key: "dispatchAll",
-        value: function dispatchAll() {
-            for (var store in this.stores) {
-                if (this.stores.hasOwnProperty(store)) {
-                    this.dispatch(store);
-                }
-            }
-        }
-    }]);
+      Object.keys(this.stores).forEach(function (store) {
+        return _this.dispatch(store);
+      });
+    }
+  }, {
+    key: "listen",
+    value: function listen(type, handler) {
+      var h = function h(_ref) {
+        var detail = _ref.detail;
+        return handler(detail);
+      };
+      this.context.addEventListener("stiva-" + type, h);
+      return h;
+    }
+  }, {
+    key: "detach",
+    value: function detach(type, listener) {
+      this.context.removeEventListener("stiva-" + type, listener);
+    }
+  }]);
 
-    return Stiva;
+  return Stiva;
 }();
-
-;
-new Stiva();
