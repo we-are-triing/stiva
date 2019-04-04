@@ -7,12 +7,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Stiva = function () {
   function Stiva() {
     var stores = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var context = arguments[1];
 
     _classCallCheck(this, Stiva);
 
     this.stores = stores;
-    this.context = context || new EventTarget();
+    this.context = new EventTarget();
   }
 
   _createClass(Stiva, [{
@@ -41,7 +40,17 @@ var Stiva = function () {
   }, {
     key: "listen",
     value: function listen(type, handler) {
-      this.context.addEventListener(type, handler);
+      var h = function h(_ref) {
+        var detail = _ref.detail;
+        return handler(detail);
+      };
+      this.context.addEventListener("stiva-" + type, h);
+      return h;
+    }
+  }, {
+    key: "detach",
+    value: function detach(type, listener) {
+      this.context.removeEventListener("stiva-" + type, listener);
     }
   }]);
 
